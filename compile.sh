@@ -7,10 +7,9 @@ if [ "$#" -eq 1 ]; then
     # Check if the file exists and has a .typ extension
     if [ -f "$file" ] && [[ "$file" == *.typ ]]; then
         echo "Compiling Typst file: $file"
-        # Extract filename with extension
-        filename_with_ext=$(basename "$file")
-        out_file="${filename_with_ext%.*}"
-        out_file="./compiled/${out_file}.pdf" 
+        # Determine relative path within docs directory
+        rel_path=${file#docs/}
+        out_file="./out/${rel_path%.typ}.pdf"
 
         mkdir -p "$(dirname "$out_file")"
         typst compile "$file" "$out_file" --format pdf --root .
@@ -19,11 +18,9 @@ if [ "$#" -eq 1 ]; then
     fi
 else
     # If no argument is provided, compile all Typst files recursively
-    find docs -name "*.typ" | while read file; do
-        # Extract filename with extension
-        filename_with_ext=$(basename "$file")
-        out_file="${filename_with_ext%.*}"
-        out_file="./compiled/${out_file}.pdf"
+    find docs -name "*.typ" | while IFS= read -r file; do
+        rel_path=${file#docs/}
+        out_file="./out/${rel_path%.typ}.pdf"
 
         mkdir -p "$(dirname "$out_file")"
         typst compile "$file" "$out_file" --format pdf --root .
