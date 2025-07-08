@@ -1,4 +1,11 @@
 #!/bin/bash
+set -euo pipefail
+
+# Ensure typst CLI is available
+if ! command -v typst >/dev/null 2>&1; then
+    echo "Error: typst CLI not found. Please install typst to continue." >&2
+    exit 1
+fi
 
 # Check if a file argument is provided
 if [ "$#" -eq 1 ]; then
