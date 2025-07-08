@@ -34,4 +34,4 @@ This script automates the compilation of Typst documents within your project. It
 ```bash
 ./compile.sh docs/papers/my_paper.typ
 ```
-This would compile `my_paper.typ` and place the resulting PDF at `out/reports/my_paper.pdf`.
+This would compile `my_paper.typ` and place the resulting PDF at `out/papers/my_paper.pdf`.
